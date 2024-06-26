@@ -15,17 +15,6 @@ import _ from "lodash";
 import { ToLowerCase, ToUpperCase, Trim } from "./transform.decorators";
 import { IsNullable, IsPassword, IsUndefinable } from "./validators.decorators";
 
-interface INumberFieldDecorator {
-  each?: boolean;
-  min?: number;
-  max?: number;
-  int?: boolean;
-  isPositive?: boolean;
-  swagger?: boolean;
-  maxSize?: number;
-  minSize?: number;
-}
-
 interface IStringFieldDecorator {
   minLength?: number;
   maxLength?: number;
@@ -120,7 +109,7 @@ export function PasswordFieldOptional(
 ): PropertyDecorator {
   return applyDecorators(
     IsUndefinable(),
-    // PasswordField({ required: false, ...options }),
+    PasswordField({ required: false, ...options }),
   );
 }
 

@@ -9,17 +9,19 @@ import type { LoginDto } from "./dto/login.dto";
 import { LoginPayloadDto } from "./dto/login-payload.dto";
 import type { UserRegisterDto } from "./dto/user-register.dto";
 import type { IAccessTokenPayload } from "./interfaces/IAccessTokenPayload";
+import { validateHash } from "../../common/utils";
+import { InvalidPasswordException } from "./exceptions";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async register(userRegisterDto: UserRegisterDto): Promise<LoginPayloadDto> {
     const isExsistUser = await this.userService.findByEmail(
-      userRegisterDto.email,
+      userRegisterDto.email
     );
 
     if (isExsistUser) {
@@ -40,6 +42,15 @@ export class AuthService {
 
     if (!userEntity) {
       throw new UserNotFoundException();
+    }
+
+    const isValidPassword = await validateHash(
+      loginDto.password,
+      userEntity.password
+    );
+
+    if (!isValidPassword) {
+      throw new InvalidPasswordException();
     }
 
     const accessToken = this.jwtService.createAccessToken(userEntity);

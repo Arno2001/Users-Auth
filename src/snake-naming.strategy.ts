@@ -6,10 +6,12 @@ export class SnakeNamingStrategy
   extends DefaultNamingStrategy
   implements NamingStrategyInterface
 {
+  // Converts class name to snake_case for table name.
   tableName(className: string, customName: string): string {
     return customName ? customName : snakeCase(className);
   }
 
+  // Converts property name to snake_case for column name.
   columnName(
     propertyName: string,
     customName: string,
@@ -21,14 +23,17 @@ export class SnakeNamingStrategy
     );
   }
 
+  // Converts relation name to snake_case.
   relationName(propertyName: string): string {
     return snakeCase(propertyName);
   }
 
+  // Generates join column name in snake_case.
   joinColumnName(relationName: string, referencedColumnName: string): string {
     return snakeCase(relationName + "_" + referencedColumnName);
   }
 
+  // Generates join table name in snake_case.
   joinTableName(
     firstTableName: string,
     secondTableName: string,
@@ -44,6 +49,7 @@ export class SnakeNamingStrategy
     );
   }
 
+  // Generates join table column name in snake_case.
   joinTableColumnName(
     tableName: string,
     propertyName: string,
@@ -54,6 +60,7 @@ export class SnakeNamingStrategy
     );
   }
 
+  // Generates column name for parent table in class table inheritance in snake_case.
   classTableInheritanceParentColumnName(
     parentTableName: string,
     parentTableIdPropertyName: string,

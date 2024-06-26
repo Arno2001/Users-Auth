@@ -1,6 +1,5 @@
 import { Transform } from "class-transformer";
-import { parsePhoneNumber } from "libphonenumber-js";
-import { castArray, isArray, isNil, map, trim } from "lodash";
+import { isArray, map, trim } from "lodash";
 
 /**
  * @description trim spaces from start and end, replace multiple spaces with one.
@@ -41,7 +40,7 @@ export function ToLowerCase(): PropertyDecorator {
     },
     {
       toClassOnly: true,
-    },
+    }
   );
 }
 
@@ -62,6 +61,6 @@ export function ToUpperCase(): PropertyDecorator {
     },
     {
       toClassOnly: true,
-    },
+    }
   );
 }

@@ -1,7 +1,6 @@
 import { Column, Entity } from "typeorm";
 
 import { AbstractEntity } from "../../common/abstract.entity";
-import { RoleTypeEnum } from "../../constants";
 import { UseDto } from "../../decorators/use-dto.decorator";
 import { UserDto } from "./dto/user.dto";
 
@@ -19,7 +18,4 @@ export class UserEntity extends AbstractEntity<UserDto> {
 
   @Column({ type: "varchar" })
   password: string;
-
-  @Column({ enum: RoleTypeEnum, type: "enum" })
-  role: RoleTypeEnum;
 }

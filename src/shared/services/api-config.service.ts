@@ -6,10 +6,21 @@ import { isNil } from "lodash";
 import { UserSubscriber } from "../../entity-subscribers/user-subscriber";
 import { SnakeNamingStrategy } from "../../snake-naming.strategy";
 
+/**
+ * Service for fetching configuration values from environment variables.
+ * Provides methods to retrieve PostgreSQL configuration, authentication configuration,
+ * application configuration, and handles type conversions for environment variables.
+ */
 @Injectable()
 export class ApiConfigService {
   constructor(private nestConfigService: NestConfigService) {}
 
+  /**
+   * Retrieves the value of an environment variable and converts it to a number.
+   * @param key The key of the environment variable to retrieve.
+   * @returns The value of the environment variable as a number.
+   * @throws Error if the environment variable is not a valid number.
+   */
   private getNumber(key: string): number {
     const value = this.get(key);
 
@@ -20,6 +31,12 @@ export class ApiConfigService {
     }
   }
 
+  /**
+   * Retrieves the value of an environment variable and converts it to a boolean.
+   * @param key The key of the environment variable to retrieve.
+   * @returns The value of the environment variable as a boolean.
+   * @throws Error if the environment variable is not a valid boolean.
+   */
   private getBoolean(key: string): boolean {
     const value = this.get(key);
 
@@ -30,16 +47,22 @@ export class ApiConfigService {
     }
   }
 
+  /**
+   * Retrieves the value of an environment variable as a string and handles newline character replacements.
+   * @param key The key of the environment variable to retrieve.
+   * @returns The value of the environment variable as a string with newline characters replaced.
+   */
   private getString(key: string): string {
     const value = this.get(key);
 
     return value.replace(/\\n/g, "\n");
   }
 
-  get nodeEnv(): string {
-    return this.getString("NODE_ENV");
-  }
-
+  /**
+   * Retrieves PostgreSQL configuration options from environment variables.
+   * Includes entity and migration paths, database connection details,
+   * subscriber classes, ORM logging configuration, and naming strategy.
+   */
   get postgresConfig(): TypeOrmModuleOptions {
     let entities = [__dirname + "/../../modules/**/*.entity{.ts,.js}"];
     let migrations = [__dirname + "/../../database/migrations/*{.ts,.js}"];
@@ -86,6 +109,10 @@ export class ApiConfigService {
     };
   }
 
+  /**
+   * Retrieves authentication configuration options from environment variables.
+   * Includes JWT private and public keys, and token expiration time.
+   */
   get authConfig() {
     return {
       privateKey: this.getString("JWT_PRIVATE_KEY"),
@@ -94,12 +121,22 @@ export class ApiConfigService {
     };
   }
 
+  /**
+   * Retrieves application configuration options from environment variables.
+   * Includes application port.
+   */
   get appConfig() {
     return {
       port: this.getString("PORT"),
     };
   }
 
+  /**
+   * Retrieves the value of an environment variable as a string.
+   * @param key The key of the environment variable to retrieve.
+   * @returns The value of the environment variable as a string.
+   * @throws Error if the environment variable is not defined.
+   */
   private get(key: string): string {
     const value = this.nestConfigService.get<string>(key);
 

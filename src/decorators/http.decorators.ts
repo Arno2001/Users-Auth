@@ -1,28 +1,25 @@
 import {
   applyDecorators,
-  SetMetadata,
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiUnauthorizedResponse } from "@nestjs/swagger";
-import type { RoleTypeEnum } from "src/constants";
 
 import { AuthGuard } from "../guards/auth.guard";
 import { AuthUserInterceptor } from "../interceptors/auth-user-interceptor.service";
-import { PublicRoute } from "./public-route.decorator";
 
+/**
+* Decorator factory function to apply authentication-related decorators to a method.
+* @param options Optional object with authentication configuration.
+* @returns Method decorator function.
+*/
 export function Auth(
-  roles: RoleTypeEnum[] = [],
-  options?: Partial<{ public: boolean }>,
 ): MethodDecorator {
-  const isPublicRoute = options?.public;
 
   return applyDecorators(
-    SetMetadata("roles", roles),
-    UseGuards(AuthGuard({ public: isPublicRoute })),
+    UseGuards(AuthGuard()),
     ApiBearerAuth(),
     UseInterceptors(AuthUserInterceptor),
     ApiUnauthorizedResponse({ description: "Unauthorized" }),
-    PublicRoute(isPublicRoute),
   );
 }

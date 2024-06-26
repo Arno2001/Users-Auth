@@ -11,7 +11,7 @@ import { UserService } from "../user/user.service";
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private configService: ApiConfigService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,6 +19,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  /**
+   * Validates and retrieves user entity based on JWT payload.
+   * @param args The JWT payload containing userId and token type.
+   * @returns The user entity associated with the validated token.
+   * @throws UnauthorizedException if token type is not TokenTypeEnum.ACCESS_TOKEN or user is not found.
+   */
   async validate(args: {
     userId: Uuid;
     type: TokenTypeEnum;

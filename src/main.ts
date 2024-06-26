@@ -20,6 +20,8 @@ async function bootstrap() {
     { cors: true },
   );
   app.enableCors();
+
+  // Global validation pipe with custom settings for data transformation and error handling.
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -29,8 +31,10 @@ async function bootstrap() {
       exceptionFactory: (errors) => new UnprocessableEntityException(errors),
     }),
   );
-  app.use(expressCtx);
+  // This is middleware for access request and response objects
+  app.use(expressCtx); 
 
+  // Retrieve an instance of ApiConfigService from the SharedModule using dependency injection.
   const configService = app.select(SharedModule).get(ApiConfigService);
   setupSwagger(app);
 

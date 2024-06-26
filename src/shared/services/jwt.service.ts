@@ -20,6 +20,11 @@ export class JwtService {
     this.expirationTime = apiConfigService.authConfig.expirationTime;
   }
 
+  /**
+   * Generates a JWT access token for a given user entity.
+   * @param userEntity The user entity for which the token is generated.
+   * @returns The generated JWT access token as a string.
+   */
   createAccessToken(userEntity: UserEntity): string {
     const payload: IAccessTokenPayload = {
       userId: userEntity.id,

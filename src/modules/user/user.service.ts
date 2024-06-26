@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { RoleTypeEnum } from "src/constants";
 import { Repository } from "typeorm";
 
 import type { UserRegisterDto } from "../auth/dto/user-register.dto";
@@ -16,10 +15,7 @@ export class UserService {
   ) {}
 
   async create(userRegisterDto: UserRegisterDto): Promise<UserEntity> {
-    const user = this.userRepository.create({
-      ...userRegisterDto,
-      role: RoleTypeEnum.USER,
-    });
+    const user = this.userRepository.create(userRegisterDto);
     await this.userRepository.save(user);
 
     return user;

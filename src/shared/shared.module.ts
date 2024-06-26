@@ -4,12 +4,16 @@ import { CqrsModule } from "@nestjs/cqrs";
 import { ApiConfigService } from "./services/api-config.service";
 import { JwtService } from "./services/jwt.service";
 
-const providers = [ApiConfigService, JwtService];
-
+/**
+ * Global module for shared services and configuration providers.
+ * Includes ApiConfigService for environment-based configuration and JwtService for JWT operations.
+ * Imports CqrsModule for Command Query Responsibility Segregation (CQRS) support.
+ * Exports ApiConfigService, JwtService, and CqrsModule for global availability.
+ */
 @Global()
 @Module({
-  providers,
+  providers: [ApiConfigService, JwtService],
   imports: [CqrsModule],
-  exports: [...providers, CqrsModule],
+  exports: [ApiConfigService, JwtService, CqrsModule],
 })
 export class SharedModule {}

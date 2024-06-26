@@ -8,7 +8,6 @@ import {
 } from "@nestjs/common";
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 
-import { RoleTypeEnum } from "../../constants";
 import { Auth, AuthUser } from "../../decorators";
 import { UserDto } from "../user/dto/user.dto";
 import { UserEntity } from "../user/user.entity";
@@ -49,7 +48,7 @@ export class AuthController {
   }
 
   @Get("me")
-  @Auth([RoleTypeEnum.USER])
+  @Auth()
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({
     description: "Get user by Id",

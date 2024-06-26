@@ -34,7 +34,13 @@ export abstract class AbstractEntity<
   updatedAt: Date;
 
   private dtoClass: Constructor<DTO, [AbstractEntity, O?]>;
-
+  
+  /**
+   * Converts the entity to a DTO (Data Transfer Object).
+   * Throws an error if @UseDto decorator is not applied to the class.
+   * @param options Optional options for DTO initialization.
+   * @returns An instance of DTO representing the entity.
+   */
   toDto(options?: O): DTO {
     const dtoClass = this.dtoClass;
 

@@ -20,7 +20,11 @@ To run the application, follow these steps:
     ```bash or other terminal
     yarn install
     ```
-3. Running the app:
+3. Create PostgreSql database (example: test)
+
+4. Create .env file enter the variables from the .env.example file and set your data 
+
+5. Running the app:
 
     # development
 
