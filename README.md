@@ -25,10 +25,10 @@ To run the application, follow these steps:
     # development
 
     ```bash or other terminal
-    yarn run start
+    yarn start
     ```
     # watch mode
 
     ```bash or other terminal
-    yarn run start:dev
+    yarn start:dev
     ```
