@@ -15,17 +15,20 @@ To run the application, follow these steps:
     ```bash or other terminal
     git clone https://github.com/Arno2001/Users-Auth.git
     ```
-2. Compile TypeScript into JavaScript, and index.html will open in the browser
+2. Instalation packeges:
 
-   ```bash
-  yarn install
-  ```
-2. Running the app
+    ```bash or other terminal
+    yarn install
+    ```
+3. Running the app:
 
-  ```bash
-  # development
-  yarn run start
+    # development
 
-  # watch mode
-  yarn run start:dev
-  ```
+    ```bash or other terminal
+    yarn run start
+    ```
+    # watch mode
+
+    ```bash or other terminal
+    yarn run start:dev
+    ```
